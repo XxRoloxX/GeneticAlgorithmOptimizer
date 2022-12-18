@@ -1,0 +1,3 @@
+/home/wieslaw/Kursy/Techniki Efektywnego Programowania Laboratoria/TEP6MiniProjekt/cmake-build-debug/CMakeFiles/TEP6MiniProjekt.dir
+/home/wieslaw/Kursy/Techniki Efektywnego Programowania Laboratoria/TEP6MiniProjekt/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/wieslaw/Kursy/Techniki Efektywnego Programowania Laboratoria/TEP6MiniProjekt/cmake-build-debug/CMakeFiles/rebuild_cache.dir
