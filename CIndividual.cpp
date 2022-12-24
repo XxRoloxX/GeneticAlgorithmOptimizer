@@ -25,7 +25,7 @@ private:
 
 CIndividual::CIndividual(){
     srand(time(NULL));
-    geneticCodeLength=77;
+    geneticCodeLength=0;
     geneticCode=NULL;
 }
 CIndividual::~CIndividual(){

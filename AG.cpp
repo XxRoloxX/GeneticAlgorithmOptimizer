@@ -9,6 +9,7 @@ AG::AG(){
     population = NULL;
     populationSize=-1;
     bestSolutionScore=-1;
+    tournamentSize=-1;
     properlySetUp=false;
 }
 AG::~AG(){
@@ -17,7 +18,7 @@ AG::~AG(){
     }
 }
 
-bool AG::setParameters(int populationSize, double crossProb,double mutationProb, double stopTime, CProblem* problem) {
+bool AG::setParameters(int populationSize, double crossProb,double mutationProb, double stopTime, int tournamentSize, CProblem* problem) {
     if(populationSize<=0 || crossProb<0 || crossProb>1 || stopTime<0 || problem ==NULL){
         return false;
     }
@@ -29,6 +30,7 @@ bool AG::setParameters(int populationSize, double crossProb,double mutationProb,
     this->mutationProb = mutationProb;
     population = new CIndividual[populationSize];
     bestSolution.setProblemInstance(problem);
+    this->tournamentSize = tournamentSize;
     properlySetUp=true;
 
     return true;
@@ -70,6 +72,26 @@ bool AG::setNewBestSolution(){
         return betterSolutionFound;
     }
 }
+int AG::getParentFromTournament(){
+
+    int currentParentIndex;
+    double bestSolution=-1;
+    double currentSolution;
+    int bestParentIndex=-1;
+
+    for(int i=0;i<tournamentSize;i++){
+        currentParentIndex =  rand() % populationSize;
+        currentSolution=population[currentParentIndex].fitness();
+
+        if(currentSolution>=bestSolution){
+            bestParentIndex=currentParentIndex;
+            bestSolution=currentSolution;
+        }
+    }
+
+    return bestParentIndex;
+}
+
 
 bool AG::solutionsCrossing(){
     if(!properlySetUp){
@@ -79,13 +101,15 @@ bool AG::solutionsCrossing(){
         std::vector<CIndividual> children(2);
         CIndividual* newPopulation = new CIndividual[populationSize];
 
+
         int indexOfFirstParent;
         int indexOfSecondParent;
 
         for(int i=0;i<populationSize-1;i+=2) {
 
-            indexOfFirstParent = rand() % populationSize;
-            indexOfSecondParent = rand() % populationSize;
+            indexOfFirstParent = getParentFromTournament();
+            indexOfSecondParent = getParentFromTournament();
+
 
             if (generateRandomRealNumber(0, 1) < crossProb) {
                 children.clear();
@@ -102,7 +126,7 @@ bool AG::solutionsCrossing(){
             children.clear();
 
         }
-        children.clear();
+        ///children.clear();
 
         delete[] population;
 
