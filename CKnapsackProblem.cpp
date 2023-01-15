@@ -11,6 +11,7 @@ CKnapsackProblem::CKnapsackProblem(){
     itemTable=NULL;
     tableLength=0;
     maxWeight=0;
+    dataProperlyLoaded=false;
 }
 
 CKnapsackProblem::~CKnapsackProblem(){
@@ -18,16 +19,15 @@ CKnapsackProblem::~CKnapsackProblem(){
 }
 bool CKnapsackProblem::deallocateItemTable() {
 
-    if(itemTable==NULL){
-        return false;
-    }
-    else{
+    if(dataProperlyLoaded && itemTable!=NULL){
         for(int i=0;i<tableLength;i++){
             delete this->itemTable[i];
         }
         delete itemTable;
 
         return true;
+    }else{
+        return false;
     }
 }
 
@@ -53,15 +53,17 @@ bool CKnapsackProblem::setItemTable(int** itemTable, int tableLength, double max
 double CKnapsackProblem::solutionValue(int* genotypeCode) {
     double valueSum=0;
     double weightSum=0;
+    if(dataProperlyLoaded){
+        for(int i=0;i<tableLength && weightSum<=maxWeight;i++){
+            valueSum+=genotypeCode[i]*itemTable[i][0];
+            weightSum+=genotypeCode[i]*itemTable[i][1];
+        }
 
-    for(int i=0;i<tableLength && weightSum<=maxWeight;i++){
-        valueSum+=genotypeCode[i]*itemTable[i][0];
-        weightSum+=genotypeCode[i]*itemTable[i][1];
+        if(weightSum>maxWeight){
+            valueSum=0;
+        }
     }
 
-    if(weightSum>maxWeight){
-        valueSum=0;
-    }
 
     return valueSum;
 }
@@ -84,6 +86,11 @@ bool CKnapsackProblem::loadFromFile(std::string fileName) {
         myFile>>tableLength;
         myFile>>maxWeight;
 
+        if(tableLength<=0 || maxWeight<=0){
+            myFile.close();
+            return false;
+        }
+
         this->setCodeLength(tableLength);
 
 
@@ -98,7 +105,7 @@ bool CKnapsackProblem::loadFromFile(std::string fileName) {
         myFile.close();
 
         itemTable=newTable;
-
+        dataProperlyLoaded=true;
         return true;
     }
 }

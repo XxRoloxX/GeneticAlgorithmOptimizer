@@ -16,8 +16,11 @@ public:
    virtual bool loadFromFile(std::string fileName);
    bool setCodeLength(int length);
    int getCodeLength();
-private:
+   bool isDataLoaded();
+protected:
     int codeLength;
+    bool dataProperlyLoaded;
+
 };
 
 

@@ -185,3 +185,9 @@ bool CIndividual::setGeneticCode(int* newGeneticCode) {
         return true;
     }
 }
+void CIndividual::printGeneticCode(){
+    std::cout <<"Score: "<<fitness() << std::endl;
+    for (int i = 0; i < problem->getCodeLength(); i++) {
+        std::cout << i << ": " << geneticCode[i] << std::endl;
+    }
+}

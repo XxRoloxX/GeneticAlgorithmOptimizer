@@ -9,6 +9,7 @@
 
 int* generateRandomBinaryList(int listSize);
 double generateRandomRealNumber(double min, double max);
+long getCurrentTime();
 
 
 

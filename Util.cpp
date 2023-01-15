@@ -6,6 +6,8 @@
 #include <ctime>
 #include <random>
 #include "Util.h"
+#include <chrono>
+
 
 int*generateRandomBinaryList(int listSize) {
 
@@ -23,4 +25,8 @@ int*generateRandomBinaryList(int listSize) {
 
 double generateRandomRealNumber(double min, double max){
     return ((double)rand())/RAND_MAX *(max-min) + min;
+}
+
+long getCurrentTime(){
+    return (std::chrono::duration_cast< std::chrono::milliseconds >(std::chrono::system_clock::now().time_since_epoch()).count());
 }

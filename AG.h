@@ -14,9 +14,10 @@ public:
     AG();
     ~AG();
     bool setParameters(int populationSize, double crossProb,double mutationProb, double stopTime,int tournamentSize, CProblem* problem);
-    CIndividual& getBestSolution();
+    CIndividual getBestSolution();
     void runIteration();
     bool initializePopulation();
+    bool runAlgorithm();
 
 private:
     int populationSize;

@@ -24,6 +24,7 @@ public:
     int* getGeneticCode();
     void operator=(CIndividual&& otherIndividual);
     void operator=(CIndividual& otherIndividual);
+    void printGeneticCode();
     std::vector<CIndividual>crossIndividualsSinglePoint(CIndividual &otherIndividual);
 private:
     int geneticCodeLength;

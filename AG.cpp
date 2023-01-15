@@ -2,6 +2,7 @@
 // Created by wieslaw on 17.12.22.
 //
 
+#include <ctime>
 #include "AG.h"
 #include "Util.h"
 
@@ -31,11 +32,17 @@ bool AG::setParameters(int populationSize, double crossProb,double mutationProb,
     population = new CIndividual[populationSize];
     bestSolution.setProblemInstance(problem);
     this->tournamentSize = tournamentSize;
-    properlySetUp=true;
 
-    return true;
+    if(problem->isDataLoaded()){
+        properlySetUp=true;
+
+        return true;
+    }else{
+        return false;
+    }
+
 }
-
+/*
 CIndividual& AG::getBestSolution() {
     int* tab = bestSolution.getGeneticCode();
     std::cout<<bestSolutionScore<<std::endl;
@@ -44,7 +51,18 @@ CIndividual& AG::getBestSolution() {
     }
     return bestSolution;
 }
-
+*/
+CIndividual AG::getBestSolution() {
+    /*
+    int *tab = bestSolution.getGeneticCode();
+    std::cout << bestSolutionScore << std::endl;
+    for (int i = 0; i < problem->getCodeLength(); i++) {
+        std::cout << i << ": " << tab[i] << std::endl;
+    }
+    return bestSolution;
+     */
+    return bestSolution;
+}
 void AG::runIteration() {
 
     setNewBestSolution();
@@ -58,7 +76,7 @@ bool AG::setNewBestSolution(){
         return false;
     }else{
         double currentFitness;
-        bool betterSolutionFound;
+        bool betterSolutionFound=false;
 
         for(int i=0;i<populationSize;i++){
             currentFitness = population[i].fitness();
@@ -105,7 +123,7 @@ bool AG::solutionsCrossing(){
         int indexOfFirstParent;
         int indexOfSecondParent;
 
-        for(int i=0;i<populationSize-1;i+=2) {
+        for(int i=0;i<populationSize;i+=2) {
 
             indexOfFirstParent = getParentFromTournament();
             indexOfSecondParent = getParentFromTournament();
@@ -119,10 +137,14 @@ bool AG::solutionsCrossing(){
                 children.clear();
                 children.push_back(population[indexOfFirstParent]);
                 children.push_back(population[indexOfSecondParent]);
+
+            }
+            newPopulation[i] = std::move(children.at(0));
+            if(i+1<populationSize){
+                newPopulation[i+1] = std::move(children.at(1));
             }
 
-            newPopulation[i] = std::move(children.at(0));
-            newPopulation[i+1] = std::move(children.at(1));
+
             children.clear();
 
         }
@@ -159,6 +181,18 @@ bool AG::initializePopulation() {
             population[i].setGeneticCode(generateRandomBinaryList(problem->getCodeLength()));
         }
         return true;
+    }
+}
+bool AG::runAlgorithm(){
+    long timeOfStart = getCurrentTime();
+    if(properlySetUp){
+        initializePopulation();
+        while(getCurrentTime()<timeOfStart+stopTime*1000){
+            runIteration();
+        }
+        return true;
+    }else{
+        return false;
     }
 }
 

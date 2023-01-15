@@ -16,6 +16,7 @@ public:
     bool setItemTable(int** itemTable, int tableLength, double maxWeight);
     double solutionValue(int* genotypeCode);
     bool loadFromFile(std::string fileName);
+    bool isTableLoaded();
 
 private:
     bool deallocateItemTable();
@@ -23,6 +24,7 @@ private:
     int** itemTable;
     int tableLength;
     double maxWeight;
+
 
 
 };

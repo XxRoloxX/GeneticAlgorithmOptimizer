@@ -31,3 +31,6 @@ double CProblem::solutionValue(int *genotypeCode) {
 bool CProblem::loadFromFile(std::string fileName) {
     return false;
 }
+bool CProblem::isDataLoaded() {
+    return dataProperlyLoaded;
+}
