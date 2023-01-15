@@ -24,7 +24,7 @@ CProblem::~CProblem() {
 
 }
 
-double CProblem::solutionValue(int *genotypeCode) {
+double CProblem::solutionValue(std::vector<int> *genotypeCode) {
     return 0;
 }
 

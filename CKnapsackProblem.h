@@ -13,8 +13,8 @@ public:
 
     CKnapsackProblem();
     ~CKnapsackProblem();
-    bool setItemTable(int** itemTable, int tableLength, double maxWeight);
-    double solutionValue(int* genotypeCode);
+    //bool setItemTable(int** itemTable, int tableLength, double maxWeight);
+    double solutionValue(std::vector<int>* genotypeCode);
     bool loadFromFile(std::string fileName);
     bool isTableLoaded();
 

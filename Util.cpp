@@ -9,14 +9,14 @@
 #include <chrono>
 
 
-int*generateRandomBinaryList(int listSize) {
+std::vector<int>*generateRandomBinaryList(int listSize) {
 
-    int* resultList = new int[listSize];
-    srand(time(NULL));
+    std::vector<int>* resultList = new std::vector<int>(listSize);
+
 
     for(int i=0;i<listSize;i++){
 
-            resultList[i]=rand()%2;
+        (*resultList)[i]=rand()%2;
     }
 
     return resultList;

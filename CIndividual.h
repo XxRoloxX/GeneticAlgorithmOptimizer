@@ -17,18 +17,18 @@ public:
     CIndividual(CIndividual&& otherIndividual);
     CIndividual(const CIndividual& otherIndividual);
     double fitness();
-    bool setGeneticCode(int* newGeneticCode);
+    bool setGeneticCode(std::vector<int>* newGeneticCode);
     ///bool setRandomGeneticCode();
     bool setProblemInstance(CProblem* newProblem);
     bool mutate(double mutationProbability);
-    int* getGeneticCode();
+    std::vector<int>* getGeneticCode();
     void operator=(CIndividual&& otherIndividual);
     void operator=(CIndividual& otherIndividual);
     void printGeneticCode();
     std::vector<CIndividual>crossIndividualsSinglePoint(CIndividual &otherIndividual);
 private:
     int geneticCodeLength;
-    int* geneticCode;
+    std::vector<int>* geneticCode;
     CProblem* problem;
 };
 

@@ -30,7 +30,7 @@ bool CKnapsackProblem::deallocateItemTable() {
         return false;
     }
 }
-
+/*
 bool CKnapsackProblem::setItemTable(int** itemTable, int tableLength, double maxWeight){
 
     if(tableLength<=0 || maxWeight<=0){
@@ -49,14 +49,15 @@ bool CKnapsackProblem::setItemTable(int** itemTable, int tableLength, double max
 
 
 }
+ */
 
-double CKnapsackProblem::solutionValue(int* genotypeCode) {
+double CKnapsackProblem::solutionValue(std::vector<int>* genotypeCode) {
     double valueSum=0;
     double weightSum=0;
-    if(dataProperlyLoaded){
+    if(dataProperlyLoaded && genotypeCode->size()==tableLength){
         for(int i=0;i<tableLength && weightSum<=maxWeight;i++){
-            valueSum+=genotypeCode[i]*itemTable[i][0];
-            weightSum+=genotypeCode[i]*itemTable[i][1];
+            valueSum+=(*genotypeCode)[i]*itemTable[i][0];
+            weightSum+=(*genotypeCode)[i]*itemTable[i][1];
         }
 
         if(weightSum>maxWeight){
@@ -72,6 +73,7 @@ bool CKnapsackProblem::loadFromFile(std::string fileName) {
     std::ifstream myFile(fileName);
     ///myFile.open(fileName);
     int** newTable;
+    bool incorrectData=false;
 
     if(myFile.fail()){
         return false;
@@ -96,17 +98,39 @@ bool CKnapsackProblem::loadFromFile(std::string fileName) {
 
         newTable = new int*[tableLength];
 
-        for(int i=0;i<tableLength;i++){
+        for(int i=0;i<tableLength && !incorrectData;i++){
             newTable[i] = new int[2];
             myFile >> newTable[i][0];
             myFile >> newTable[i][1];
+
+            if(newTable[i][0]<0 || newTable[i][1]<0){
+                incorrectData=true;
+            }
+
         }
+
+
+
 
         myFile.close();
 
-        itemTable=newTable;
-        dataProperlyLoaded=true;
-        return true;
+        if(!incorrectData){
+            itemTable=newTable;
+            dataProperlyLoaded=true;
+            return true;
+
+        }else{
+            //deallocate new table
+            for(int i=0;i<tableLength;i++){
+                delete newTable[i];
+            }
+            delete newTable;
+
+            dataProperlyLoaded=false;
+            return false;
+
+        }
+
     }
 }
 

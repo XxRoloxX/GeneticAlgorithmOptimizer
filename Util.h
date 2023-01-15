@@ -7,7 +7,7 @@
 
 
 
-int* generateRandomBinaryList(int listSize);
+std::vector<int>* generateRandomBinaryList(int listSize);
 double generateRandomRealNumber(double min, double max);
 long getCurrentTime();
 

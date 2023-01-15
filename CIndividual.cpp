@@ -24,7 +24,7 @@ private:
  */
 
 CIndividual::CIndividual(){
-    srand(time(NULL));
+
     geneticCodeLength=0;
     geneticCode=NULL;
 }
@@ -50,11 +50,11 @@ void CIndividual::operator=(CIndividual& otherIndividual) {
         delete geneticCode;
     }
     geneticCodeLength=otherIndividual.geneticCodeLength;
-    geneticCode = new int[geneticCodeLength];
+    geneticCode = new std::vector<int>(geneticCodeLength);
     problem=otherIndividual.problem;
 
     for(int i=0;i<geneticCodeLength;i++){
-        geneticCode[i]=otherIndividual.geneticCode[i];
+        (*geneticCode)[i]=(*otherIndividual.geneticCode)[i];
     }
 }
 CIndividual::CIndividual(CIndividual&& otherIndividual) {
@@ -66,9 +66,9 @@ CIndividual::CIndividual(CIndividual&& otherIndividual) {
 CIndividual::CIndividual(const CIndividual& otherIndividual) {
     geneticCodeLength=otherIndividual.geneticCodeLength;
     problem=otherIndividual.problem;
-    geneticCode = new int[geneticCodeLength];
+    geneticCode = new std::vector<int>(geneticCodeLength);
     for(int i=0;i<geneticCodeLength;i++){
-        geneticCode[i]=otherIndividual.geneticCode[i];
+        (*geneticCode)[i]=(*otherIndividual.geneticCode)[i];
     }
 
 }
@@ -104,7 +104,7 @@ bool CIndividual::setGeneticCode(int* newGeneticCode, int newGeneticCodeLength){
 }
  */
 
-int* CIndividual::getGeneticCode(){
+std::vector<int>* CIndividual::getGeneticCode(){
     return geneticCode;
 }
 /*
@@ -123,7 +123,7 @@ bool CIndividual::mutate(double mutationProbability){
     for(int i=0;i<geneticCodeLength;i++){
         chance = generateRandomRealNumber(0,1);
         if(chance<mutationProbability){
-            geneticCode[i] = 1-geneticCode[i];
+            (*geneticCode)[i] = 1-(*geneticCode)[i];
         }
     }
 
@@ -145,18 +145,18 @@ std::vector<CIndividual> CIndividual::crossIndividualsSinglePoint(CIndividual &o
     std::vector<CIndividual> vChildren;
 
 
-    int* child1GeneticCode = new int[geneticCodeLength];
-    int* child2GeneticCode = new int[geneticCodeLength];
+    std::vector<int>* child1GeneticCode = new std::vector<int>(geneticCodeLength);
+    std::vector<int>* child2GeneticCode = new std::vector<int>(geneticCodeLength);
 
     ///Actual single-point crossing algorithm
     for(int i=0;i<geneticCodeLength;i++){
         if(i<crossingPoint){
-            child1GeneticCode[i]=geneticCode[i];
-            child2GeneticCode[i]=otherIndividual.geneticCode[i];
+            (*child1GeneticCode)[i]=(*geneticCode)[i];
+            (*child2GeneticCode)[i]=(*otherIndividual.geneticCode)[i];
         }
         else{
-            child2GeneticCode[i]=geneticCode[i];
-            child1GeneticCode[i]=otherIndividual.geneticCode[i];
+            (*child2GeneticCode)[i]=(*geneticCode)[i];
+            (*child1GeneticCode)[i]=(*otherIndividual.geneticCode)[i];
         }
     }
 
@@ -175,7 +175,7 @@ std::vector<CIndividual> CIndividual::crossIndividualsSinglePoint(CIndividual &o
     return std::move(vChildren);
 }
 ///Only copies reference not actual structure
-bool CIndividual::setGeneticCode(int* newGeneticCode) {
+bool CIndividual::setGeneticCode(std::vector<int>* newGeneticCode) {
 
     if(newGeneticCode==NULL){
         return false;
@@ -188,6 +188,6 @@ bool CIndividual::setGeneticCode(int* newGeneticCode) {
 void CIndividual::printGeneticCode(){
     std::cout <<"Score: "<<fitness() << std::endl;
     for (int i = 0; i < problem->getCodeLength(); i++) {
-        std::cout << i << ": " << geneticCode[i] << std::endl;
+        std::cout << i << ": " << (*geneticCode)[i] << std::endl;
     }
 }

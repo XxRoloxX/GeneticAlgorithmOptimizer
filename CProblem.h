@@ -12,7 +12,7 @@ class CProblem {
 public:
     CProblem();
     virtual ~CProblem();
-   virtual double solutionValue(int* genotypeCode);
+   virtual double solutionValue(std::vector<int>* genotypeCode);
    virtual bool loadFromFile(std::string fileName);
    bool setCodeLength(int length);
    int getCodeLength();

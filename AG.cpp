@@ -12,6 +12,7 @@ AG::AG(){
     bestSolutionScore=-1;
     tournamentSize=-1;
     properlySetUp=false;
+    srand(time(NULL));
 }
 AG::~AG(){
     if(population!=NULL){
