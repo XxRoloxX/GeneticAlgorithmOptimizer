@@ -7,7 +7,7 @@ int main() {
 
     AG alg;
     CProblem* knapSackProblem = new CKnapsackProblem();
-    knapSackProblem->loadFromFile("CKnapsack26.txt");
+    knapSackProblem->loadFromFile("CKnapsack2.txt");
     alg.setParameters(100,0.4,0.2,1,10,knapSackProblem);
     /*
     alg.initializePopulation();

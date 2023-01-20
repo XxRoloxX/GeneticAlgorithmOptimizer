@@ -8,7 +8,6 @@
 
 #include "CIndividual.h"
 const int TOURNAMENT_SIZE=5;
-const int MILISECONDS_IN_SECONDS = 1000;
 
 class AG {
 public:
@@ -16,7 +15,7 @@ public:
     ~AG();
     bool setParameters(int populationSize, double crossProb,double mutationProb, double stopTime,int tournamentSize, CProblem* problem);
     CIndividual getBestSolution();
-    void runIteration();
+    bool runIteration();
     bool initializePopulation();
     bool runAlgorithm();
 
@@ -27,7 +26,7 @@ private:
     CProblem* problem;
 
     bool properlySetUp;
-    double bestSolutionScore;
+    //double bestSolutionScore;
     CIndividual bestSolution;
 
     double crossProb;

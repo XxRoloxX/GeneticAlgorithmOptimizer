@@ -9,7 +9,6 @@
 AG::AG(){
     population = NULL;
     populationSize=-1;
-    bestSolutionScore=-1;
     tournamentSize=-1;
     properlySetUp=false;
     srand(time(NULL));
@@ -73,11 +72,15 @@ CIndividual AG::getBestSolution() {
 
 
 }
-void AG::runIteration() {
-
-    setNewBestSolution();
-    solutionsCrossing();
-    solutionsMutation();
+bool AG::runIteration() {
+    if(properlySetUp){
+        setNewBestSolution();
+        solutionsCrossing();
+        solutionsMutation();
+        return true;
+    }else{
+        return false;
+    }
 
 }
 
@@ -87,15 +90,19 @@ bool AG::setNewBestSolution(){
     }else{
         double currentFitness;
         bool betterSolutionFound=false;
+        int bestSolutionIndex=0;
+        double bestSolutionScore=-1;
 
         for(int i=0;i<populationSize;i++){
             currentFitness = population[i].fitness();
             if(currentFitness>bestSolutionScore){
                 bestSolutionScore=currentFitness;
-                bestSolution = (population[i]);
+                bestSolutionIndex = i;
                 betterSolutionFound=true;
             }
         }
+
+        bestSolution = population[bestSolutionIndex];
 
         return betterSolutionFound;
     }
