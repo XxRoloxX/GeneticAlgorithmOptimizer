@@ -62,7 +62,16 @@ CIndividual AG::getBestSolution() {
     }
     return bestSolution;
      */
-    return bestSolution;
+    /*
+    if(properlySetUp){
+        return bestSolution;
+    }else{
+        return std::move(CIndividual());
+    }
+     */
+    return std::move(bestSolution);
+
+
 }
 void AG::runIteration() {
 
@@ -150,8 +159,8 @@ bool AG::solutionsCrossing(){
 
         }
         ///children.clear();
-
         delete[] population;
+
 
         population = newPopulation;
         return true;
@@ -188,7 +197,7 @@ bool AG::runAlgorithm(){
     long timeOfStart = getCurrentTime();
     if(properlySetUp){
         initializePopulation();
-        while(getCurrentTime()<timeOfStart+stopTime*1000){
+        while(getCurrentTime()<timeOfStart+stopTime*MILISECONDS_IN_SECONDS){
             runIteration();
         }
         return true;

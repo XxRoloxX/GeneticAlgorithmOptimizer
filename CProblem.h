@@ -14,10 +14,10 @@ public:
     virtual ~CProblem();
    virtual double solutionValue(std::vector<int>* genotypeCode);
    virtual bool loadFromFile(std::string fileName);
-   bool setCodeLength(int length);
    int getCodeLength();
    bool isDataLoaded();
 protected:
+    bool setCodeLength(int length);
     int codeLength;
     bool dataProperlyLoaded;
 

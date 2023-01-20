@@ -186,8 +186,16 @@ bool CIndividual::setGeneticCode(std::vector<int>* newGeneticCode) {
     }
 }
 void CIndividual::printGeneticCode(){
-    std::cout <<"Score: "<<fitness() << std::endl;
-    for (int i = 0; i < problem->getCodeLength(); i++) {
-        std::cout << i << ": " << (*geneticCode)[i] << std::endl;
+
+    if(problem!=NULL && geneticCode!=NULL){
+        std::cout <<"Score: "<<fitness() << std::endl;
+        std::cout<<"[";
+        for (int i = 0; i < problem->getCodeLength(); i++) {
+            std::cout <<(*geneticCode)[i]<<", ";
+        }
+        std::cout<<"]";
+        std::cout<<std::endl;
+
     }
+
 }

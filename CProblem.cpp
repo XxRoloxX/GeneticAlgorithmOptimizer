@@ -3,6 +3,7 @@
 //
 
 #include "CProblem.h"
+
 bool CProblem::setCodeLength(int length) {
     if(length<0){
         return false;
@@ -12,6 +13,7 @@ bool CProblem::setCodeLength(int length) {
         return true;
     }
 }
+
 
 int CProblem::getCodeLength() {
     return codeLength;

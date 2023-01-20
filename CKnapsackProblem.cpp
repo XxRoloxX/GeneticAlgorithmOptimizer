@@ -76,6 +76,7 @@ bool CKnapsackProblem::loadFromFile(std::string fileName) {
     bool incorrectData=false;
 
     if(myFile.fail()){
+        dataProperlyLoaded=false;
         return false;
     }else{
 
@@ -90,6 +91,7 @@ bool CKnapsackProblem::loadFromFile(std::string fileName) {
 
         if(tableLength<=0 || maxWeight<=0){
             myFile.close();
+            dataProperlyLoaded=false;
             return false;
         }
 
@@ -98,19 +100,20 @@ bool CKnapsackProblem::loadFromFile(std::string fileName) {
 
         newTable = new int*[tableLength];
 
+        for(int i=0;i<tableLength;i++){
+            newTable[i]=NULL;
+        }
+
         for(int i=0;i<tableLength && !incorrectData;i++){
             newTable[i] = new int[2];
             myFile >> newTable[i][0];
             myFile >> newTable[i][1];
 
-            if(newTable[i][0]<0 || newTable[i][1]<0){
+            if(newTable[i][0]<=0 || newTable[i][1]<=0){
                 incorrectData=true;
             }
 
         }
-
-
-
 
         myFile.close();
 
@@ -122,7 +125,9 @@ bool CKnapsackProblem::loadFromFile(std::string fileName) {
         }else{
             //deallocate new table
             for(int i=0;i<tableLength;i++){
-                delete newTable[i];
+                if(newTable[i]!=NULL){
+                    delete newTable[i];
+                }
             }
             delete newTable;
 

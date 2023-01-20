@@ -8,6 +8,7 @@
 
 #include "CIndividual.h"
 const int TOURNAMENT_SIZE=5;
+const int MILISECONDS_IN_SECONDS = 1000;
 
 class AG {
 public:
