@@ -68,13 +68,14 @@ CIndividual AG::getBestSolution() {
         return std::move(CIndividual());
     }
      */
+    setNewBestSolution();
     return std::move(bestSolution);
 
 
 }
 bool AG::runIteration() {
     if(properlySetUp){
-        setNewBestSolution();
+      //  setNewBestSolution();
         solutionsCrossing();
         solutionsMutation();
         return true;
@@ -180,7 +181,7 @@ bool AG::solutionsMutation(){
         return false;
     }else{
         for(int i=0;i<populationSize;i++){
-            population[i].mutate(mutationProb);
+            population[i].mutate(mutationProb, population[rand()%populationSize]);
         }
         return true;
     }

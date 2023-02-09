@@ -17,9 +17,10 @@ int main() {
     alg.getBestSolution();
     */
 
-
     alg.runAlgorithm();
+    //CIndividual result = alg.getBestSolution();
     CIndividual result = alg.getBestSolution();
+
     result.printGeneticCode();
     delete knapSackProblem;
 

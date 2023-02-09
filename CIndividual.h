@@ -20,7 +20,8 @@ public:
     bool setGeneticCode(std::vector<int>* newGeneticCode);
     ///bool setRandomGeneticCode();
     bool setProblemInstance(CProblem* newProblem);
-    bool mutate(double mutationProbability);
+    //bool mutate(double mutationProbability);
+    bool mutate(double mutationProbability, CIndividual& other);
     std::vector<int>* getGeneticCode();
     void operator=(CIndividual&& otherIndividual);
     void operator=(CIndividual& otherIndividual);

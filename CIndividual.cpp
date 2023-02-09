@@ -27,6 +27,7 @@ CIndividual::CIndividual(){
 
     geneticCodeLength=0;
     geneticCode=NULL;
+    problem=NULL;
 }
 CIndividual::~CIndividual(){
     if(geneticCode!=NULL){
@@ -112,6 +113,7 @@ int CIndividual::getGeneticCodeLength(){
     return geneticCodeLength;
 }
  */
+/*
 bool CIndividual::mutate(double mutationProbability){
 
     if(mutationProbability<0 || mutationProbability>1){
@@ -128,6 +130,27 @@ bool CIndividual::mutate(double mutationProbability){
     }
 
     return true;
+}
+ */
+bool CIndividual::mutate(double mutationProbability, CIndividual& other){
+    if(geneticCodeLength!=other.geneticCodeLength){
+        return false;
+    }else{
+
+        double chance;
+
+        for(int i=0;i<geneticCodeLength;i++){
+            if((*geneticCode)[i]!=(*other.geneticCode)[i]){
+                chance = generateRandomRealNumber(0,1);
+                if(chance<mutationProbability){
+                    (*geneticCode)[i] = 1-(*geneticCode)[i];
+                }
+            }
+        }
+
+        return true;
+
+    }
 }
 ///Returns vector of crossed individuals
 std::vector<CIndividual> CIndividual::crossIndividualsSinglePoint(CIndividual &otherIndividual) {
